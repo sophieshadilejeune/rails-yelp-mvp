@@ -1,0 +1,35 @@
+<h1>Welcome to: <%= @restaurant.name %></h1>
+<p>We are a <%= @restaurant.category %> restaurant</p>
+
+<p>Come and visit us at: <%= @restaurant.address %></p>
+<p>Feel free to ring us at: <%= @restaurant.phone_number %></p>
+
+<br>
+<p>List of reviews</p>
+<ul> <% @restaurant.reviews.each do |review|  %>
+  <li>
+    Rating: <%= review.rating %>/5
+    <br>
+    <%= review.content %>
+  </li>
+  <% end  %>
+</ul>
+
+
+<br><br>
+<%= link_to 'Return to the list of restaurants', restaurants_path, class: "btn btn-primary"   %>
+
+<h2>Add a review for this restaurant</h2>
+<%= simple_form_for [@restaurant, @review] do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :rating %>
+    <%= f.input :content %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
